@@ -1,5 +1,5 @@
 __________________________________________________________________________
-|		          task	      	       |	time              |
+|		          task	      	               |	      time            |
 |______________________________________________|                          |
 |         transition	   |     impact	       |                          |
 |__________________________|___________________|__________________________|
@@ -8,7 +8,7 @@ __________________________________________________________________________
 |                          |                   |Vampire: timeout (300sec) |
 |__________________________|___________________|__________________________|
 |new-bal(A0)=old-bal(A0)+4 | new-sum=old-sum+2 |Z3: 0.58sec               |
-|new-bal(A1)=old-bal(A1)-2 |		       |CVC4: 7.14sec             |
+|new-bal(A1)=old-bal(A1)-2 |		           |CVC4: 7.14sec             |
 |                          |                   |Vampire: timeout (300sec) |
 |__________________________|___________________|__________________________|
 |new-bal(A0)=old-bal(A0)+5 | new-sum=old-sum+1 |Z3: 1.52sec               |
@@ -16,6 +16,5 @@ __________________________________________________________________________
 |new-bal(A2)=old-bal(A2)-1 |	               |Vampire: timeout (300sec) |
 |__________________________|___________________|__________________________|
 
-Notes: Integer arithmetic used (UFLIA), as in all other tables also here, only the instances of surjectivity we need for the function count and ind. Default versions used for both Vampire and Z3.
-
-Shows the encoding can handle more complex arithmetic tasks as well.
+Notes: Integer arithmetic used (UFLIA) used; only the instances of surjectivity we need for the functions count and ind; Default versions used for CVC4, Vampire and Z3.
+ 

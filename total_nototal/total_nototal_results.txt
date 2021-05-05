@@ -1,5 +1,5 @@
  __________________________________________________________________________________
-|             mint1                      |	      transfer1                    |
+|             mint1                      |	              transfer1                |
 |________________________________________|_________________________________________|
 | nototal   | Vampire	Z3   	 CVC4    | nototal   | Vampire    Z3       CVC4    |           
 |      nat  | 0.921sec	0.02sec	 timeout |     nat   | 15.000sec  timeout  timeout |
@@ -18,8 +18,6 @@
 |      int  | timeout	3.81sec	 5.95sec |     int   | timeout 	  timeout  6.56sec |
 |___________|____________________________|___________|_____________________________|
 
-Notes: Integer arithmetic used (UFLIA) in the int files, Naturals defined in the files directly for the nat files, _s means the functions count and ind(A,.) are defined to be surjective on [1,max(old-X,new-X)]. The not _s files only assert instances of surjectivity of ind(A,.) and count.
-The nototal files do not have invariants, but assert the negated impaqct of the sum directly, whereas the withtotal have additional total values which can be used as invariants. Hence intuitively, the nototal versions should be easier. However solvers performance very unstable (> or < vs distinct), (transferring from a0 to a1 vs from a1 to a0), often time out and changing detail of encoding then solvable in a few seconds.
+Notes: Integer arithmetic used (UFLIA) in the int files; Naturals defined in the files directly for the nat files; _s means the functions count and ind(A,.) are defined to be surjective on [1,max(old-X,new-X)]. The not _s files only assert instances of surjectivity of ind(A,.) and count.
+The nototal files do not have invariants, but assert the negated impact of the sum directly, whereas the withtotal have additional total values which can be used as invariants. Hence intuitively, the nototal versions should be easier. However solvers performance very unstable (> or < vs distinct), (transferring from a0 to a1 vs from a1 to a0), often time out and changing detail of encoding then solvable in a few seconds.
 Timeout after 300sec, default versions of Z3 and Vampire used, for CVC4 the only option (other than time limit and language assertion) was --full_saturate_quant.
-
-The full surjectivity causes a drastic increase in complexity and already led to timeouts for the examples here, this is why for further research we mainly focussed on instances of surjectivity.  
