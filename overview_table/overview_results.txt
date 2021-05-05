@@ -1,0 +1,42 @@
+ _____________________________________________________________________________________________________________________
+|encoding      |        nochanges    |  mint1          | transfer1           | mintN             | transferN          |
+|______________|_____________________|_________________|_____________________|___________________|____________________|
+|              |Z3 0.02              |Z3 0.01          | Z3 0.02             | Z3 timeout        | Z3 timeout         |
+|uf            |CVC4 0.01            |CVC4 0.02        | CVC4 0.03           | CVC4 timeout      | CVC4 timeout       |
+|              |Vampire 0.110        |Vampire 0.185    | Vampire 0.187       | Vampire 0.345*    | Vampire 0.438*     |
+|______________|_____________________|_________________|_____________________|___________________|____________________|
+|              |Z3 0.01              |Z3 0.02          | Z3 timeout          | Z3 timeout        | Z3 timeout         |
+|nat           |CVC4 0.01            |CVC4 timeout     | CVC4 timeout        | CVC4 timeout      | CVC4 timeout       |
+|              |Vampire 0.123        |Vampire 0.921    | Vampire 15.354      | Vampire 23.227**  | Vampire 228.216**  |
+|______________|_____________________|_________________|_____________________|___________________|____________________|
+|              |Z3 0.01              |Z3 0.02          | Z3 0.02             | Z3 0.03           | Z3 0.11            |
+|int           |CVC4 0.03            |CVC4 0.03        | CVC4 0.07           | CVC4 0.05         | CVC4 0.35          |
+|              |Vampire 0.112        |Vampire timeout  | Vampire timeout     | Vampire timeout   | Vampire timeout    |
+|______________|_____________________|_________________|_____________________|___________________|____________________|
+|              |Z3 0.01              |Z3 timeout       | Z3 timeout          | Z3 timeout        | Z3 timeout         |
+|id            |CVC4 0.03            |CVC4 timeout     | CVC4 timeout        | CVC4 timeout      | CVC4 timeout       |
+|              |Vampire 0.095        |Vampire 7.358* **| Vampire 17.159* **  | Vampire 23.523* **| Vampire timeout* **|
+|______________|_____________________|_________________|_____________________|___________________|____________________|
+
+Notes: 
+timeout after 300sec
+*) means non-default parameters: induction on, and some others found using portfolio mode, the precise call is mentioned in the code as comment.
+ For the id encodings the *) refers to the inductive property file which is located directly in the overview_table folder as it is the same for all the transitions except nochanges
+**) non-default parameters: split queues with params (6 6 10,1), i.e. -thsq on -thsqd 6 -thsqc 6 -thsqr 10,1 
+
+For the id (inductive datatypes) encoding there is an inductive property that has to be shown, this part of the proof is done separately as a lemma. The computing time was just summed up.
+For mintN and transferN in the encodings nat int and id there are lemmas needed as well. Those lemmas are also proven separately and the computing time is just summed up.
+
+About the encodings: The id version is the weakest in the sense that we only sum up implicitly and are somewhat bound in transitions (i.e. the arithmetic examples cannot be done properly in this encoding). 
+Also the mintN and transferN can be understood as a repitition of the same task N times. However, it uses invariants which is useful for verification. And as there is no explicit arith going on it it easy for the solvers.
+
+The versions nat, int and id do not have invariants, but can be extended using the total constants from the other table in order to have invariants again.
+Further, nat and ind don't have full surjectivity implemented only the instances needed. That means the encoding may have to be adapted for other tasks (i.e. the surjectivity assertions may not be enough). 
+The id encoding implements a nice workaround by using a linked list and hence implements full surjectivity and is apart from that similar to the nat encoding. This explains the slightly worse results for id. 
+
+Results very promising, every task can be proven in every encoding except transferN for id. Hence no matter the setting, there is a fitting encoding for every solver.
+To the best of our knnowledge the first ones to prove such kinds of problems automatically using fol/smt reasoning.  
+
+Explanation mintN uf vs int (same for transferN): for mintN in the uf version an inductive property has to be proven which is hard/not implemented in smt solvers. Whereas in mintN_int, there exists an axioms that we can assume a certain order of the coins without losing any generality of the concept. This is why the smt solvers are able to prove the "harder" task while the fail in the "easier" case.
+
+Note: all the files (including the ones in the other folders of used_for_paper) have been checked for consistency, that is run without the negated implication we want to prove. For every file the solvers either timed out or returned sat. Which is strong evidence for the consistencies of our encodings.
